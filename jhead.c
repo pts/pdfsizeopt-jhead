@@ -486,8 +486,8 @@ void RenameAssociated(const char * FileName, char * NewBaseName)
     int a;
     int PathLen;
     int ExtPos;
-    char FilePattern[_MAX_PATH+1];
-    char NewName[_MAX_PATH+1];
+    char FilePattern[PATH_MAX+1];
+    char NewName[PATH_MAX+1];
     struct _finddata_t finddata;
     long find_handle;
 
@@ -519,7 +519,7 @@ void RenameAssociated(const char * FileName, char * NewBaseName)
         for(a = strlen(finddata.name);finddata.name[a] != '.';){
             if (--a == 0) goto next_file;
         }
-        strncat(NewName, finddata.name+a, _MAX_PATH-strlen(NewName)); // add extension to new name
+        strncat(NewName, finddata.name+a, PATH_MAX-strlen(NewName)); // add extension to new name
 
         if (rename(FilePattern, NewName) == 0){
             if (!Quiet){
@@ -1673,7 +1673,8 @@ int main (int argc, char **argv)
     for (;argn<argc;argn++){
         FilesMatched = FALSE;
 
-        #ifdef _WIN32
+
+        #if 0  // #ifdef _WIN32
             SlashToNative(argv[argn]);
             // Use my globbing module to do fancier wildcard expansion with recursive
             // subdirectories under Windows.
