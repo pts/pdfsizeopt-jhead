@@ -367,7 +367,7 @@ static void DoCommand(const char * FileName, int ShowIt)
     // as mktemp - that is, that between getting the random name, and making the file
     // some other program could snatch that exact same name!
     // also, not all pltforms support mkstemp.
-    mktemp(TempName);
+    (void)! mktemp(TempName);
 
 
     if(!TempName[0]) {
